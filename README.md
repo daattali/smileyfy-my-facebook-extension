@@ -1,0 +1,1 @@
+TODO option to turn smileys/rickrolling on/off
