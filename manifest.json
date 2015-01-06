@@ -1,0 +1,33 @@
+{
+  "name": "Smiley-fy My Facebook",
+  "version": "0.0.2",
+  "manifest_version": 2,
+  "description": "",
+  
+  "page_action": {
+	"default_title": "Fb translate"
+  },
+  "background": {
+    "scripts": ["src/background.js"],
+    "persistent": false
+  },
+  "permissions" : [
+    "declarativeContent"
+  ],
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*",
+		"http://www.facebook.com/*"
+      ],
+      "js": [
+        "src/inject.js"
+      ]
+    }
+  ]
+}
