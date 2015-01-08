@@ -1,0 +1,40 @@
+body {
+	width: 300px;
+	text-align: center;
+	padding: 20px;
+	font-size: 1em;
+}
+
+#smileyfy-options {
+	text-align: left;
+}
+
+#smileyfy-options input[type=checkbox] {
+	position: relative;
+	top: 2px;
+}
+
+#smileyfy-rickroll-link {
+	font-style: bold;
+	text-decoration: none;
+}
+
+#smileyfy-rickroll-link:hover {
+	text-decoration: underline;
+}
+
+#smileyfy-footer {
+	margin-top: 7px;
+	position: relative;
+}
+
+#smileyfy-copyright {
+	color: #888888;
+	font-size: 1em;
+}
+
+#smileyfy-link {
+	text-decoration: underline;
+	cursor: pointer;
+	color: inherit;
+}

@@ -1,19 +1,25 @@
 {
   "name": "Smileyfy My Facebook",
-  "version": "0.0.2",
+  "version": "0.0.7",
   "manifest_version": 2,
   "description": "Smileyfy My Facebook will convert all profile picture to happy smileys and add some fun rickrolling.",
   
   "page_action": {
-	"default_title": "Fb translate"
+	"default_title": "Smileyfy My Facebook",
+	"default_popup": "html/popup.html"
   },
   "background": {
-    "scripts": ["src/background.js"],
+    "scripts": [
+	  "js/background.js",
+	  "js/common.js"
+	],
     "persistent": false
   },
   "permissions" : [
-    "declarativeContent"
+    "declarativeContent",
+	"storage"
   ],
+  "options_page": "html/options.html",
   "icons": {
     "16": "img/icon-16.png",
     "48": "img/icon-48.png",
@@ -26,7 +32,8 @@
 		"http://www.facebook.com/*"
       ],
       "js": [
-        "src/inject.js"
+		"js/common.js",
+        "js/inject.js"
       ]
     }
   ],

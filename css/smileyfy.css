@@ -1,0 +1,54 @@
+body {
+	width: 200px;
+	text-align: center;
+}
+
+#smileyfy-options {
+	text-align: left;
+}
+
+#smileyfy-options input[type=checkbox] {
+	position: relative;
+	top: 2px;
+}
+
+#smileyfy-rickroll-link {
+	font-style: bold;
+	text-decoration: none;
+}
+
+#smileyfy-rickroll-link:hover {
+	text-decoration: underline;
+}
+
+#smileyfy-footer {
+	margin-top: 7px;
+	position: relative;
+}
+
+#smileyfy-copyright {
+	color: #888888;
+	font-size: 1em;
+}
+
+#smileyfy-link {
+	text-decoration: underline;
+	cursor: pointer;
+	color: inherit;
+}
+
+#smileyfy-ext-refresh {
+	width: 14px;
+	height: 14px;
+	position: absolute;
+	right: 0;
+	cursor: pointer;
+}
+
+#smileyfy-ext-refresh:hover {
+	transform: rotate(45deg);
+}
+
+#smileyfy-ext-refresh:active {
+	opacity: 0.7;
+}

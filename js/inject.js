@@ -1,8 +1,6 @@
 var smileyfyContent = {
 
-	// the type of smileyfy on a particular image
-	SMILEYFY_SMILEY : 1,
-	SMILEYFY_RICK : 2,
+	changeImgType : null,
 	
 	// what images to use
 	STATIC_URL : "https://raw.githubusercontent.com/daattali/smileyfy-my-facebook-extension/master/img/",
@@ -12,22 +10,28 @@ var smileyfyContent = {
 	
 	// mutation observer
 	observer : null,
-	
 
 	// init: add message listeners and call the appropriate function based on the request
 	init : function() {
 		// initialize a mutation observer (listens for changes to the DOM)
 		MutationObserver = window.WebKitMutationObserver
 		observer = new MutationObserver(smileyfyContent.domChanged);
-	
+				
 		// run the script on page init
-		smileyfyContent.initPage();
-		
+		smileyfyContent.initPage();					
+
 		// listen for messages and dispatch accordingly
 		chrome.runtime.onMessage.addListener(
-		  function(request, sender, sendResponse) {	
+		  function(request, sender, sendResponse) {
+console.log(request);		  
 			if (request.action == "init") {
 				smileyfyContent.initIfLoaded(2000, 1);
+			}
+			if (request.action == "refresh") {
+				smileyfyContent.initPage();
+			}
+			if (request.action == "optionsChanged") {
+				smileyfyContent.changeImgType = request.changeImgType;
 			}
 		  }
 		);
@@ -67,7 +71,7 @@ var smileyfyContent = {
 	},
 	
 	// initPage: initialize the DOM observer and smileyfy all images present on page load
-	initPpage : function() {
+	initPage : function() {
 		observer.observe(document.getElementById("contentArea"), {
 		  subtree: true,
 		  childList: true,
@@ -75,46 +79,64 @@ var smileyfyContent = {
 		});	
 
 		var imgs = document.getElementsByTagName("img");
-		smileyfyContent.smileyfyImgs(imgs);
+		chrome.storage.sync.get({
+			changeImgType : [true, true]
+		}, function(items) {
+			smileyfyContent.changeImgType = items.changeImgType;
+	
+			smileyfyContent.unsmileyfyImgs(imgs);
+			smileyfyContent.smileyfyImgs(imgs);			
+		});		
 	},
 	
 	// smileyfyImgs: given a list of images, attempt to change them to either smileys or to rickrolls
-	smileyfyImgs : function(imgs) {
-		// large images get rickrolled (but if they're a profile pic, then don't because profile pics have priority)
-     	var largeImgs = [];
-		for (var i in imgs) {
-			var img = imgs[i];
-			if (img.width && img.width >= 100 && img.getAttribute("data-smileyfy") != smileyfyContent.SMILEYFY_SMILEY) {
-				largeImgs.push(img);
+	smileyfyImgs : function(imgs) {	
+		var convertProfile = smileyfyContent.changeImgType[smileyfyCommon.SMILEYFY_SMILEY];
+		var convertLarge = smileyfyContent.changeImgType[smileyfyCommon.SMILEYFY_RICK];
+		
+		if (convertLarge) {
+			// large images get rickrolled (but if they're a profile pic, then don't because profile pics have priority)
+			var largeImgs = [];
+			var smileyfyType = smileyfyCommon.SMILEYFY_RICK;
+			for (var i in imgs) {
+				var img = imgs[i];
+				if (img.width && img.width >= 100) {
+					largeImgs.push(img);
+				}
 			}
-		}
-		for (var i in largeImgs) {
-			smileyfyContent.smileyfyImg(largeImgs[i], smileyfyContent.SMILEYFY_RICK);
+			for (var i in largeImgs) {
+				smileyfyContent.smileyfyImg(largeImgs[i], smileyfyType);
+			}
 		}
 		
-		// profile pictures get replaced with smiley
-		// (there is definitely some code duplication here, but since it's only a few lines and they only appear
-		// twice, I argue that the duplication makes it clearer in this case)
-		var profileImgs = [];
-		for (var i in imgs) {
-			var img = imgs[i];
-			if (img.src && img.src.indexOf("fbcdn-profile") != -1) {
-				profileImgs.push(img);
+		if (convertProfile) {
+			// profile pictures get replaced with smiley
+			// (there is definitely some code duplication here, but since it's only a few lines and they only appear
+			// twice, I argue that the duplication makes it clearer in this case)
+			var profileImgs = [];
+			var smileyfyType = smileyfyCommon.SMILEYFY_SMILEY;
+			for (var i in imgs) {
+				var img = imgs[i];
+				if (img.src && img.src.indexOf("fbcdn-profile") != -1) {
+					profileImgs.push(img);
+				}
+			}
+			for (var i in profileImgs) {
+				smileyfyContent.smileyfyImg(profileImgs[i], smileyfyType);
 			}
 		}
-		for (var i in profileImgs) {
-			smileyfyContent.smileyfyImg(profileImgs[i], smileyfyContent.SMILEYFY_SMILEY);
-		}	
 	},
 	
 	// smileyfyImg: given an image and a type of smileyfication, do the image swap
 	smileyfyImg : function(img, type) {
 		var imgUrl = null;
 		
-		if (type == smileyfyContent.SMILEYFY_SMILEY) {
+		if (parseInt(img.getAttribute("data-smileyfy-type")) >= type) return;
+		
+		if (type == smileyfyCommon.SMILEYFY_SMILEY) {
 			// smiley: simply change the image to smiley
 			imgUrl = smileyfyContent.getImgUrl(smileyfyContent.SMILEY_IMG);
-		} else if (type == smileyfyContent.SMILEYFY_RICK) {
+		} else if (type == smileyfyCommon.SMILEYFY_RICK) {
 			// rickroll: calculate the given image's aspect ratio and see which Rick Astley image has the
 			// closest matching aspect ratio. I didn't want to use a one-size-fits-all image because
 			// very long images vs very tall images would look very bad if they used the same replacement
@@ -133,16 +155,31 @@ var smileyfyContent = {
 		}
 		
 		// set the new attributes of the image
+		img.setAttribute("data-smileyfy-type", type);
+		img.setAttribute("data-smileyfy-orig", img.src);		
 		img.src = imgUrl;
-		img.setAttribute("data-smileyfy", type);
 		img.style.left = 0;
 		img.style.top = 0;
+	},
+	
+	unsmileyfyImgs : function(imgs) {	
+		for (var i in imgs) {
+			var img = imgs[i];
+
+			if (img instanceof HTMLElement && img.getAttribute("data-smileyfy-type") &&
+				!smileyfyContent.changeImgType[img.getAttribute("data-smileyfy-type")]) {
+				console.log("NOPE");
+				img.removeAttribute("data-smileyfy-type");
+				img.src = img.getAttribute("data-smileyfy-orig");
+				img.removeAttribute("data-smileyfy-orig");
+			}
+		}
 	},
 	
 	// getImgUrl: return the full absolute URL for an image given a relative URL
 	getImgUrl : function(img) {
 		return smileyfyContent.STATIC_URL + img;
 	}
-}
+};
 
 smileyfyContent.init();

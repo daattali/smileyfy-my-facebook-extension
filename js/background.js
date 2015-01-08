@@ -30,9 +30,9 @@ var smileyfyBg = {
 			  chrome.tabs.sendMessage(tabs[0].id, {action : "init"});
 			});
 		  }
-		});
+		});			
 	},
-	
+		
 	// deb: show a debug message
 	deb : function(msg) {
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
