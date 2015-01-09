@@ -1,6 +1,10 @@
 body {
-	width: 200px;
+	width: 230px;
 	text-align: center;
+}
+
+#smileyfy-title {
+	font-size:1.4em;
 }
 
 #smileyfy-options {

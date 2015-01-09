@@ -1,4 +1,4 @@
-var smileyfyContent = {
+var smileyfy = {
 
 	changeImgType : null,
 	
@@ -15,23 +15,23 @@ var smileyfyContent = {
 	init : function() {
 		// initialize a mutation observer (listens for changes to the DOM)
 		MutationObserver = window.WebKitMutationObserver
-		observer = new MutationObserver(smileyfyContent.domChanged);
+		observer = new MutationObserver(smileyfy.domChanged);
 				
 		// run the script on page init
-		smileyfyContent.initPage();					
+		smileyfy.initPage();					
 
 		// listen for messages and dispatch accordingly
 		chrome.runtime.onMessage.addListener(
 		  function(request, sender, sendResponse) {
 console.log(request);		  
 			if (request.action == "init") {
-				smileyfyContent.initIfLoaded(2000, 1);
+				smileyfy.initIfLoaded(2000, 1);
 			}
 			if (request.action == "refresh") {
-				smileyfyContent.initPage();
+				smileyfy.initPage();
 			}
 			if (request.action == "optionsChanged") {
-				smileyfyContent.changeImgType = request.changeImgType;
+				smileyfy.changeImgType = request.changeImgType;
 			}
 		  }
 		);
@@ -47,7 +47,7 @@ console.log(request);
 					var node = mutation.addedNodes[i];
 					if (node && node.nodeType == 1) {
 						var imgs = node.getElementsByTagName("img");
-						smileyfyContent.smileyfyImgs(imgs);
+						smileyfy.smileyfyImgs(imgs);
 					}
 				}
 			}
@@ -63,9 +63,9 @@ console.log(request);
 		
 		setTimeout(function() { 
 			if (document.getElementById("contentArea")) {
-				smileyfyContent.initPage();
+				smileyfy.initPage();
 			} else {
-				smileyfyContent.initIfLoaded(time, n-1);
+				smileyfy.initIfLoaded(time, n-1);
 			}},
 			time);
 	},
@@ -82,17 +82,17 @@ console.log(request);
 		chrome.storage.sync.get({
 			changeImgType : [true, true]
 		}, function(items) {
-			smileyfyContent.changeImgType = items.changeImgType;
+			smileyfy.changeImgType = items.changeImgType;
 	
-			smileyfyContent.unsmileyfyImgs(imgs);
-			smileyfyContent.smileyfyImgs(imgs);			
+			smileyfy.unsmileyfyImgs(imgs);
+			smileyfy.smileyfyImgs(imgs);			
 		});		
 	},
 	
 	// smileyfyImgs: given a list of images, attempt to change them to either smileys or to rickrolls
 	smileyfyImgs : function(imgs) {	
-		var convertProfile = smileyfyContent.changeImgType[smileyfyCommon.SMILEYFY_SMILEY];
-		var convertLarge = smileyfyContent.changeImgType[smileyfyCommon.SMILEYFY_RICK];
+		var convertProfile = smileyfy.changeImgType[smileyfyCommon.SMILEYFY_SMILEY];
+		var convertLarge = smileyfy.changeImgType[smileyfyCommon.SMILEYFY_RICK];
 		
 		if (convertLarge) {
 			// large images get rickrolled (but if they're a profile pic, then don't because profile pics have priority)
@@ -105,7 +105,7 @@ console.log(request);
 				}
 			}
 			for (var i in largeImgs) {
-				smileyfyContent.smileyfyImg(largeImgs[i], smileyfyType);
+				smileyfy.smileyfyImg(largeImgs[i], smileyfyType);
 			}
 		}
 		
@@ -122,7 +122,7 @@ console.log(request);
 				}
 			}
 			for (var i in profileImgs) {
-				smileyfyContent.smileyfyImg(profileImgs[i], smileyfyType);
+				smileyfy.smileyfyImg(profileImgs[i], smileyfyType);
 			}
 		}
 	},
@@ -135,20 +135,20 @@ console.log(request);
 		
 		if (type == smileyfyCommon.SMILEYFY_SMILEY) {
 			// smiley: simply change the image to smiley
-			imgUrl = smileyfyContent.getImgUrl(smileyfyContent.SMILEY_IMG);
+			imgUrl = smileyfy.getImgUrl(smileyfy.SMILEY_IMG);
 		} else if (type == smileyfyCommon.SMILEYFY_RICK) {
 			// rickroll: calculate the given image's aspect ratio and see which Rick Astley image has the
 			// closest matching aspect ratio. I didn't want to use a one-size-fits-all image because
 			// very long images vs very tall images would look very bad if they used the same replacement
 			var aspectRatio = img.width / img.height;
-			for (var i = 0; i < smileyfyContent.RICK_RATIOS.length - 1; i++) {
-				if (aspectRatio <= (smileyfyContent.RICK_RATIOS[i] + smileyfyContent.RICK_RATIOS[i+1]) / 2) {
-					imgUrl = smileyfyContent.getImgUrl(smileyfyContent.RICK_IMGS[i]);
+			for (var i = 0; i < smileyfy.RICK_RATIOS.length - 1; i++) {
+				if (aspectRatio <= (smileyfy.RICK_RATIOS[i] + smileyfy.RICK_RATIOS[i+1]) / 2) {
+					imgUrl = smileyfy.getImgUrl(smileyfy.RICK_IMGS[i]);
 					break;
 				}
 			}
 			if (!imgUrl) {
-				imgUrl = smileyfyContent.getImgUrl(smileyfyContent.RICK_IMGS[smileyfyContent.RICK_IMGS.length - 1]);
+				imgUrl = smileyfy.getImgUrl(smileyfy.RICK_IMGS[smileyfy.RICK_IMGS.length - 1]);
 			}	
 		} else {
 			return;
@@ -167,7 +167,7 @@ console.log(request);
 			var img = imgs[i];
 
 			if (img instanceof HTMLElement && img.getAttribute("data-smileyfy-type") &&
-				!smileyfyContent.changeImgType[img.getAttribute("data-smileyfy-type")]) {
+				!smileyfy.changeImgType[img.getAttribute("data-smileyfy-type")]) {
 				console.log("NOPE");
 				img.removeAttribute("data-smileyfy-type");
 				img.src = img.getAttribute("data-smileyfy-orig");
@@ -178,8 +178,8 @@ console.log(request);
 	
 	// getImgUrl: return the full absolute URL for an image given a relative URL
 	getImgUrl : function(img) {
-		return smileyfyContent.STATIC_URL + img;
+		return smileyfy.STATIC_URL + img;
 	}
 };
 
-smileyfyContent.init();
+smileyfy.init();
