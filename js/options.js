@@ -1,4 +1,6 @@
 var smileyfyOptions = {
+	
+	// init: on page load, restore the saved options and add listeners to changing them
 	init : function() {
 		smileyfyOptions.restoreOptions();
 		
@@ -15,6 +17,7 @@ var smileyfyOptions = {
 		});
 	},
 	
+	// saveOption: an option was changed, save it
 	saveOption : function() {
 		var changeImgType = new Array(2);
 		changeImgType[smileyfyCommon.SMILEYFY_SMILEY] = document.getElementById('smileyfy-options-profile').checked;

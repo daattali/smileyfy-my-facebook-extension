@@ -1,5 +1,6 @@
 var smileyfy = {
 
+	// which image types to change (profile/other/both/none)
 	changeImgType : null,
 	
 	// what images to use
@@ -23,7 +24,6 @@ var smileyfy = {
 		// listen for messages and dispatch accordingly
 		chrome.runtime.onMessage.addListener(
 		  function(request, sender, sendResponse) {
-console.log(request);		  
 			if (request.action == "init") {
 				smileyfy.initIfLoaded(2000, 1);
 			}
@@ -79,12 +79,16 @@ console.log(request);
 		});	
 
 		var imgs = document.getElementsByTagName("img");
+		
+		// load the options of which images to change
 		chrome.storage.sync.get({
 			changeImgType : [true, true]
 		}, function(items) {
 			smileyfy.changeImgType = items.changeImgType;
 	
+			// unsmileyfy all the images (in case some images were smileyfied from before and now the option is off)
 			smileyfy.unsmileyfyImgs(imgs);
+			// now perform the smileyfication!
 			smileyfy.smileyfyImgs(imgs);			
 		});		
 	},
@@ -162,13 +166,14 @@ console.log(request);
 		img.style.top = 0;
 	},
 	
+	// unsmileyfyImgs: look at the given images, and if any of them have changed
+	// by the extension, then revert them
 	unsmileyfyImgs : function(imgs) {	
 		for (var i in imgs) {
 			var img = imgs[i];
 
 			if (img instanceof HTMLElement && img.getAttribute("data-smileyfy-type") &&
 				!smileyfy.changeImgType[img.getAttribute("data-smileyfy-type")]) {
-				console.log("NOPE");
 				img.removeAttribute("data-smileyfy-type");
 				img.src = img.getAttribute("data-smileyfy-orig");
 				img.removeAttribute("data-smileyfy-orig");

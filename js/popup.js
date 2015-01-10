@@ -16,6 +16,7 @@ var smileyfyPopup = {
 		});
 	},
 	
+	// optionClicked: one of the options was changed, so save it and refresh the UI
 	optionClicked : function() {
 		var changeImgType = new Array(2);
 		changeImgType[smileyfyCommon.SMILEYFY_SMILEY] = document.getElementById('smileyfy-options-profile').checked;
@@ -30,6 +31,7 @@ var smileyfyPopup = {
 		});			
 	},
 	
+	// initUi: initialize the UI
 	initUi : function() {
 		chrome.storage.sync.get({
 			changeImgType : [true, true]
