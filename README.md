@@ -3,7 +3,7 @@
 _Dean Attali_    
 _January 2015_    
 _Source code available [on GitHub](https://github.com/daattali/smileyfy-my-facebook-extension)_     
-_Get the extension at the [Chrome Web Store TODO]_  
+_Get the extension at the [Chrome Web Store](https://chrome.google.com/webstore/detail/smileyfy-my-facebook/ideagdnlnmgjdhhbelgadnakbhphljol)_  
 
 
 ## Description
