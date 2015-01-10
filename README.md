@@ -28,6 +28,10 @@ If you're in need of some more smiles in your life, or you constantly find yours
 - A "refresh" button in the extension will let you see how the page looks with and without smileyfication with ease.
 
 
+## Screenshot
+
+![](./img/doc/screenshot-home.png)
+
 ## Disclaimer
 
 I would not advise using my code as a template or resource for learning how to write Chrome extensions. I learned how to write the extension and fully built it fairly quickly, so I'm not sure what the best practices are and how to properly organize the code. It was just an excuse to test out how Chrome extensions work. I also left a little bit of ugly code in there -- please dont judge :)
