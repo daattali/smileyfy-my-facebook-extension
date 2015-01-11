@@ -1,43 +1,43 @@
 body {
-	width: 350px;
-	text-align: center;
-	font-size: 1em;
+  width: 350px;
+  text-align: center;
+  font-size: 1em;
 }
 
 #smileyfy-title {
-	font-size:1.4em;
+  font-size:1.4em;
 }
 
 #smileyfy-options {
-	text-align: left;
+  text-align: left;
 }
 
 #smileyfy-options input[type=checkbox] {
-	position: relative;
-	top: 2px;
+  position: relative;
+  top: 2px;
 }
 
 #smileyfy-rickroll-link {
-	font-style: bold;
-	text-decoration: none;
+  font-style: bold;
+  text-decoration: none;
 }
 
 #smileyfy-rickroll-link:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 #smileyfy-footer {
-	margin-top: 7px;
-	position: relative;
+  margin-top: 7px;
+  position: relative;
 }
 
 #smileyfy-copyright {
-	color: #888888;
-	font-size: 1em;
+  color: #888888;
+  font-size: 1em;
 }
 
 #smileyfy-link {
-	text-decoration: underline;
-	cursor: pointer;
-	color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  color: inherit;
 }
