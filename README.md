@@ -40,3 +40,9 @@ I would not advise using my code as a template or resource for learning how to w
 ## Other extensions
 
 [GitHub Diff Navigator](https://github.com/daattali/github-diff-navigator-extension) - Chrome extension that allows you to easily navigate through the changes in a file that has been edited on GitHub
+
+[Google Slides Auto Resize Speaker Notes](https://github.com/daattali/gslides-betternotes-extension) - the slides thumbnails in the Speaker Notes window of Google Slides are tiny. This extension dynamically resizes the slides to be more readable based on the window size.
+
+---
+
+To see my other projects, visit [http://deanattali.com/projects](http://deanattali.com/projects)
