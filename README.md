@@ -30,7 +30,7 @@ If you're in need of some more smiles in your life, or you constantly find yours
 
 ## Screenshot
 
-![](./img/doc/screenshot-home.png)
+![Screenshot](./img/doc/screenshot-home.png)
 
 ## Other extensions
 
