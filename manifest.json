@@ -1,6 +1,6 @@
 {
   "name": "Smileyfy My Facebook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "manifest_version": 2,
   "description": "Smileyfy My Facebook will convert all profile picture to happy smileys and add some fun rickrolling.",
   "page_action": {
