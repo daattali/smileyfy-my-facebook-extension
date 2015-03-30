@@ -1,9 +1,13 @@
 # Smileyfy My Facebook (Chrome extension)
 
-_Dean Attali_    
+_[Dean Attali](http://deanattali.com)_    
 _January 2015_    
 _Source code available [on GitHub](https://github.com/daattali/smileyfy-my-facebook-extension)_     
 _Get the extension at the [Chrome Web Store](https://chrome.google.com/webstore/detail/smileyfy-my-facebook/ideagdnlnmgjdhhbelgadnakbhphljol)_  
+
+## Installation
+
+Installation is extremely easy: just go to [the Chrome extension store](https://chrome.google.com/webstore/detail/smileyfy-my-facebook/ideagdnlnmgjdhhbelgadnakbhphljol) and click on the "Add to Chrome" button.
 
 
 ## Description
@@ -32,11 +36,13 @@ If you're in need of some more smiles in your life, or you constantly find yours
 
 ![Screenshot](./img/doc/screenshot-home.png)
 
-## Other extensions
+## My other extensions
 
 [GitHub Diff Navigator](https://github.com/daattali/github-diff-navigator-extension) - Chrome extension that allows you to easily navigate through the changes in a file that has been edited on GitHub
 
 [Google Slides Auto Resize Speaker Notes](https://github.com/daattali/gslides-betternotes-extension) - the slides thumbnails in the Speaker Notes window of Google Slides are tiny. This extension dynamically resizes the slides to be more readable based on the window size.
+
+[Project Free TV Ad Bypass](https://github.com/daattali/pftv-ad-bypass-extension) - Project Free TV serves a 10-second ad page before allowing users to continue to the video - this extension bypasses the ad page.
 
 ---
 
